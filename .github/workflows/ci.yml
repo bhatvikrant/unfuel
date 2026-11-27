@@ -1,0 +1,30 @@
+name: CI
+
+# Type-check, lint, run the tests and build on every push to main and every pull request. Vercel
+# builds each push too, but it never runs the tests, so a failing one could otherwise reach production.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.4
+      - run: bun install --frozen-lockfile
+      - run: bun run typecheck
+      - run: bun run lint
+      - run: bun run test
+      # no Convex URL is needed to compile
+      - run: bun run build

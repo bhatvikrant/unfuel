@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+    <!-- Dark mode is a class on <html> (src/lib/theme.ts keeps it in step with the rider's setting). Set it
+         here, before the first paint, so a dark-mode device never flashes the light theme while the app
+         loads. vercel.json's Content-Security-Policy names this script by its hash: tests/unit/csp.test.ts
+         fails, and prints the new hash, when it is edited. -->
+    <script>try{var t=localStorage.getItem("unfuel:theme");if(t==="dark"||(t!=="light"&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark")}catch(e){}</script>
+    <!-- Open the connection to the Convex deployment while the bundle is still downloading. -->
+    <link rel="preconnect" href="%VITE_CONVEX_URL%" />
+    <!-- Installed on a phone: full screen, our own title. -->
+    <meta name="application-name" content="Unfuel" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Unfuel" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="description" content="Unfuel: photograph the fuel bill and the odometer, and see your real mileage and what each kilometre costs. Free, no ads." />
+    <title>Unfuel</title>
+    <!-- Boot screen: the same pulsing logo as FullPageLoader, drawn from this file alone so a slow
+         connection shows the app (in the right theme) while the bundle downloads, instead of a blank
+         page. React replaces it on its first render. -->
+    <style>
+      html { background: #ffffff; color: #0a0a0a; }
+      html.dark { background: #0a0a0a; color: #fafafa; }
+      .boot { display: flex; min-height: 100vh; min-height: 100dvh; align-items: center; justify-content: center; }
+      .boot-mark { display: inline-flex; align-items: center; gap: 10px; animation: boot-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; font: 600 17px/1.5 "Geist Variable", system-ui, -apple-system, sans-serif; letter-spacing: -0.025em; }
+      .boot-mark rect { fill: #171717; }
+      .boot-mark path { fill: #fafafa; }
+      html.dark .boot-mark rect { fill: #fafafa; }
+      html.dark .boot-mark path { fill: #171717; }
+      @keyframes boot-pulse { 50% { opacity: 0.5; } }
+      @media (prefers-reduced-motion: reduce) { .boot-mark { animation: none; } }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="boot" aria-busy="true" aria-label="Loading Unfuel">
+        <span class="boot-mark">
+          <svg width="32" height="32" viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="112" /><path d="M256 104 162.4 246.5A112 112 0 1 0 349.6 246.5z" /></svg>
+          Unfuel
+        </span>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

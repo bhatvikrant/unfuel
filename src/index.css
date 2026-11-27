@@ -1,0 +1,454 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --font-sans: 'Geist Variable', sans-serif;
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-8: var(--chart-8);
+    --color-chart-7: var(--chart-7);
+    --color-chart-6: var(--chart-6);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    /* 5:1 on --muted, where secondary text also sits (0.556 was 4.3:1 there) */
+    --muted-foreground: oklch(0.52 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    /* the focused control's border: 3:1 or more against the page (0.708 was 2.3:1); its halo is this at half strength */
+    --ring: oklch(0.5 0 0);
+    /* categorical series, in fixed order; validated colorblind-safe on the light surface */
+    --chart-1: #2a78d6;
+    --chart-2: #eb6834;
+    --chart-3: #1baf7a;
+    --chart-4: #eda100;
+    --chart-5: #e87ba4;
+    --chart-6: #008300;
+    --chart-7: #6250d6;
+    --chart-8: #e34948;
+    --chart-rest: oklch(0.75 0 0);
+    --radius: 0.625rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    /* the same eight hues, re-stepped for the dark surface */
+    --chart-1: #3987e5;
+    --chart-2: #d95926;
+    --chart-3: #199e70;
+    --chart-4: #c98500;
+    --chart-5: #d55181;
+    --chart-6: #008300;
+    --chart-7: #9085e9;
+    --chart-8: #e66767;
+    --chart-rest: oklch(0.45 0 0);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+  button:not(:disabled), [role="button"]:not(:disabled) {
+    cursor: pointer;
+    }
+  html {
+    @apply font-sans;
+    }
+  /* iOS Safari gives native date and time inputs an intrinsic width/height that ignores w-full/h-*, so they overflow their container. */
+  input[type="date"], input[type="time"] {
+    -webkit-appearance: none;
+    appearance: none;
+    min-width: 0;
+    }
+  input[type="date"]::-webkit-date-and-time-value, input[type="time"]::-webkit-date-and-time-value {
+    margin: 0;
+    text-align: left;
+    }
+}
+/* a wrong passcode shakes the dots (PinPad) */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  @keyframes shake { 0%, 100% { transform: none; } }
+}
+/* the recap's current card filling its progress segment; the card moves on when it ends (RecapPage) */
+@keyframes recap-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+/* ---- UnMoney tokens ---- */
+@theme inline {
+  --color-income: var(--income);
+  --color-expense: var(--expense);
+  --color-transfer: var(--transfer);
+  /* what a budget still has left: green in both colour sets (over stays the expense colour) */
+  --color-budget-left: var(--budget-left); /* the poster image draws it from --chart-3 */
+  --shadow-card: var(--shadow-card);
+  --shadow-pop: var(--shadow-pop);
+}
+:root {
+  /* dark enough to read as text on white (4.5:1); the dark theme keeps the brighter pair */
+  --money-blue: oklch(0.55 0.19 255);
+  --money-red: oklch(0.58 0.2 28);
+  /* --chart-3's green, dark enough to be read as text on white; the dark theme uses --chart-3 itself */
+  --budget-left: oklch(0.52 0.13 160);
+  --income: var(--money-blue);
+  --expense: var(--money-red);
+  --transfer: oklch(0.55 0 0);
+  /* surfaces lifted with a hairline ring and a soft drop rather than a hard border */
+  --shadow-card: 0 0 0 1px oklch(0.145 0 0 / 6%), 0 1px 2px oklch(0.145 0 0 / 5%), 0 8px 24px -8px oklch(0.145 0 0 / 10%);
+  --shadow-pop: 0 0 0 1px oklch(0.145 0 0 / 7%), 0 2px 6px oklch(0.145 0 0 / 6%), 0 16px 48px -12px oklch(0.145 0 0 / 22%);
+}
+:root[data-colorset="B"] {
+  --income: var(--money-red);
+  --expense: var(--money-blue);
+}
+.dark {
+  --budget-left: var(--chart-3);
+  --money-blue: oklch(0.62 0.19 255);
+  --money-red: oklch(0.66 0.2 28);
+  --transfer: oklch(0.7 0 0);
+  --shadow-card: 0 0 0 1px oklch(1 0 0 / 7%), 0 1px 2px oklch(0 0 0 / 40%), 0 8px 24px -8px oklch(0 0 0 / 50%);
+  --shadow-pop: 0 0 0 1px oklch(1 0 0 / 9%), 0 20px 60px -12px oklch(0 0 0 / 70%);
+}
+/*
+  Style settings (lib/theme.ts sets data-tint with --tint-h, data-pattern and data-corners on <html>).
+  A tinted page keeps every text pairing: in light the paper goes a shade off white so the hue shows and
+  cards stay white on it; in dark each surface takes the hue at its own lightness.
+*/
+:root[data-tint]:not(.dark) {
+  --background: oklch(0.975 0.012 var(--tint-h));
+  --sidebar: oklch(0.96 0.014 var(--tint-h));
+  --secondary: oklch(0.955 0.014 var(--tint-h));
+  --muted: var(--secondary);
+  --accent: var(--secondary);
+  --sidebar-accent: oklch(0.93 0.018 var(--tint-h));
+  --border: oklch(0.91 0.014 var(--tint-h));
+  --input: var(--border);
+  --sidebar-border: var(--border);
+}
+.dark[data-tint] {
+  --background: oklch(0.155 0.016 var(--tint-h));
+  --card: oklch(0.215 0.02 var(--tint-h));
+  --popover: var(--card);
+  --sidebar: var(--card);
+  --secondary: oklch(0.28 0.024 var(--tint-h));
+  --muted: var(--secondary);
+  --accent: var(--secondary);
+  --sidebar-accent: var(--secondary);
+}
+/*
+  True black: the dark page itself is pure black (on an OLED screen those pixels are off) and the surfaces
+  on it sit a step darker than usual, each still lighter than the one under it, so text only gains contrast.
+  A tint stays on the surfaces; the page under them is black.
+*/
+.dark[data-black] {
+  --background: oklch(0 0 0);
+  --sidebar: oklch(0 0 0);
+  --card: oklch(0.17 0 0);
+  --popover: var(--card);
+  --secondary: oklch(0.24 0 0);
+  --muted: var(--secondary);
+  --accent: var(--secondary);
+  --sidebar-accent: var(--secondary);
+}
+.dark[data-black][data-tint] {
+  --card: oklch(0.17 0.018 var(--tint-h));
+  --secondary: oklch(0.24 0.022 var(--tint-h));
+}
+:root[data-corners="sharp"] { --radius: 0.2rem; }
+:root[data-corners="round"] { --radius: 1rem; }
+/* The pattern behind the cards. The rules match any element, so a swatch on the Style page can show one that is not the page's. */
+[data-pattern] {
+  --pattern: none;
+  --pattern-size: auto;
+  --pattern-repeat: repeat;
+  --pattern-ink: color-mix(in oklch, var(--foreground) 7%, transparent);
+}
+[data-pattern="dots"] {
+  --pattern: radial-gradient(circle, color-mix(in oklch, var(--foreground) 16%, transparent) 1px, transparent 1.5px);
+  --pattern-size: 16px 16px;
+}
+[data-pattern="grid"] {
+  --pattern: linear-gradient(var(--pattern-ink) 1px, transparent 1px), linear-gradient(90deg, var(--pattern-ink) 1px, transparent 1px);
+  --pattern-size: 24px 24px;
+}
+/* drawn in mid grey, which reads on a light page and a dark one alike (an image cannot take a theme colour) */
+[data-pattern="waves"] {
+  --pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='16'%3E%3Cpath d='M0 8q12-8 24 0t24 0' fill='none' stroke='%23808080' stroke-opacity='.25'/%3E%3C/svg%3E");
+}
+[data-pattern="plus"] {
+  --pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 11v6M11 14h6' fill='none' stroke='%23808080' stroke-opacity='.4'/%3E%3C/svg%3E");
+}
+/* the accent colour, fading down from the top of the page */
+[data-pattern="glow"] {
+  --pattern: radial-gradient(ellipse 80% 100% at 50% 0, color-mix(in oklch, var(--primary) 20%, transparent), transparent);
+  --pattern-size: 100% min(100%, 26rem);
+  --pattern-repeat: no-repeat;
+}
+.page-pattern {
+  background-image: var(--pattern, none);
+  background-size: var(--pattern-size, auto);
+  background-repeat: var(--pattern-repeat, repeat);
+}
+/*
+  Phones: cards run edge to edge and cover the page, so a glow behind them shows only in the gaps
+  between sections. There it is laid over the top of the page instead, header included. It takes no
+  taps, and at these strengths the text under it keeps its contrast (grey captions stay above 4.5:1;
+  the dark page has more room, so it glows stronger).
+*/
+@media (width < 48rem) {
+  :root[data-pattern="glow"] { --pattern: none; --glow: 12%; }
+  .dark[data-pattern="glow"] { --glow: 18%; }
+  :root[data-pattern="glow"] #main::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 24rem;
+    z-index: 35;
+    pointer-events: none;
+    background: radial-gradient(ellipse 110% 100% at 50% 0, color-mix(in oklch, var(--primary) var(--glow), transparent), transparent);
+  }
+}
+html, body, #root { height: 100%; }
+html, body { overscroll-behavior-y: none; }
+body { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+/* installed app: no double-tap zoom anywhere (touch-action doesn't reach past an inner scroller), layered so touch-none still wins */
+@layer base { :where(.standalone) * { touch-action: manipulation; } }
+/* no link previews or text selection on long-press of app chrome, as in a native app */
+nav, button, [role="button"], a { -webkit-touch-callout: none; }
+nav { user-select: none; }
+/* the phone tab bar: 3.5rem of tabs + its top border + the home-indicator area of an installed iPhone app */
+:root { --tabbar-h: calc(3.5rem + 1px + env(safe-area-inset-bottom)); }
+@utility safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+.tabular { font-variant-numeric: tabular-nums; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+/* the bar along the top while a screen's code downloads (ScreenLoadingBar in App.tsx) */
+@keyframes screen-loading {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(300%); }
+}
+
+/*
+  Motion kit. Everything is a CSS keyframe inside no-preference, so with reduced motion none of it
+  runs. Bills drawn by lib/moneyFlight.ts sit outside: that module skips the flight itself.
+*/
+.money-bill {
+  position: absolute;
+  left: -12px;
+  top: -7px;
+  width: 24px;
+  height: 14px;
+  border-radius: 2.5px;
+  background: linear-gradient(135deg, #8fd3a8, #4f9e6f);
+  box-shadow: inset 0 0 0 1px #2f7d50, 0 1px 3px rgb(0 0 0 / 0.18);
+  will-change: transform, opacity;
+}
+.money-bill::after {
+  content: "";
+  position: absolute;
+  inset: 3px 8px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px #2f7d50;
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Menus and popovers (.menu-grow) grow out of the button that opened them, then a menu's rows
+     (.menu-row) follow a beat apart. Every selector here ends in a class: one ending in * or a
+     bare :nth-child is tested against every element on every style pass. */
+  .menu-grow[data-state="open"] {
+    animation: menu-grow 300ms cubic-bezier(0.3, 1.3, 0.5, 1) backwards;
+  }
+  .menu-grow[data-state="open"] > .menu-row {
+    animation: menu-row 240ms cubic-bezier(0.23, 1, 0.32, 1) backwards;
+    animation-delay: var(--row-delay, 160ms);
+  }
+  .menu-row:nth-child(1) { --row-delay: 40ms; }
+  .menu-row:nth-child(2) { --row-delay: 60ms; }
+  .menu-row:nth-child(3) { --row-delay: 80ms; }
+  .menu-row:nth-child(4) { --row-delay: 100ms; }
+  .menu-row:nth-child(5) { --row-delay: 120ms; }
+  .menu-row:nth-child(6) { --row-delay: 140ms; }
+
+  /* The rows of a list that are on screen when it shows rise into place, a beat apart
+     (lib/useSettleIn.ts sets the class and the delay, then takes them off). Only transform and
+     opacity move, which the compositor handles without a repaint. */
+  .settle-row {
+    animation: row-in 340ms cubic-bezier(0.23, 1, 0.32, 1) backwards;
+    animation-delay: var(--settle-delay, 0ms);
+  }
+
+  /* Bars grow from their baseline with a small overshoot, staggered by --i. */
+  .bar-grow-x {
+    transform-origin: left center;
+    animation: bar-grow-x 700ms cubic-bezier(0.2, 1.15, 0.4, 1) backwards;
+    animation-delay: calc(min(var(--i, 0), 12) * 35ms);
+  }
+  .bar-grow-y {
+    transform-origin: center bottom;
+    animation: bar-grow-y 700ms cubic-bezier(0.2, 1.15, 0.4, 1) backwards;
+    animation-delay: calc(min(var(--i, 0), 12) * 35ms);
+  }
+
+  /* A face joining a split lands with a springy pop. */
+  .pop-in {
+    animation: pop-in 420ms cubic-bezier(0.3, 1.6, 0.5, 1) backwards;
+  }
+
+  /* One wobble of a bell hanging from its top. */
+  .bell-ring {
+    transform-origin: 50% 12%;
+    animation: bell-ring 900ms cubic-bezier(0.3, 1.4, 0.5, 1);
+  }
+}
+@keyframes menu-grow {
+  from { opacity: 0; transform: scale(0.6); filter: blur(6px); }
+  55% { opacity: 1; filter: blur(0); }
+  to { opacity: 1; transform: scale(1); filter: none; }
+}
+@keyframes menu-row { from { opacity: 0; transform: translateY(-4px); } }
+@keyframes row-in { from { opacity: 0; transform: translateY(8px); } }
+@keyframes bar-grow-x { from { transform: scaleX(0); } }
+@keyframes bar-grow-y { from { transform: scaleY(0); } }
+@keyframes pop-in { from { transform: scale(0.3); opacity: 0; } }
+@keyframes bell-ring {
+  15% { transform: rotate(16deg); }
+  30% { transform: rotate(-12deg); }
+  45% { transform: rotate(8deg); }
+  60% { transform: rotate(-4deg); }
+  75% { transform: rotate(2deg); }
+}
+
+/* ---- /features: the parts of a bento tile (src/pages/features/FeaturesPage.tsx) ----
+   A part waits out of sight and arrives --at seconds after its tile gets data-play. Everything here
+   moves by opacity and transform alone (the written text by clip-path), so the compositor can run it
+   and nothing is laid out again: no part changes size or pushes its neighbours. */
+.bento-tile { --settle: cubic-bezier(0.22, 1, 0.36, 1); }
+.bento-tile [data-part] {
+  opacity: 0;
+  transform: translate3d(0, 8px, 0);
+  transition: opacity 0.5s var(--settle) calc(var(--at, 0) * 1s), transform 0.7s var(--settle) calc(var(--at, 0) * 1s);
+}
+.bento-tile [data-part="fade"] { transform: none; }
+.bento-tile [data-part="paper"] { transform: translate3d(0, 32px, 0); transition-duration: 0.6s, 0.9s; }
+.bento-tile [data-part="tick"] { transform: scale(0.6); transition-duration: 0.2s, 0.45s; transition-timing-function: ease-out, cubic-bezier(0.34, 1.4, 0.64, 1); }
+.bento-tile [data-part="lit"] { opacity: 0.3; transform: none; }
+.bento-tile [data-part="draw"] { opacity: 1; transform: scaleX(0); transform-origin: left; transition-duration: 0s, 0.5s; }
+/* the placeholder a part resolves from: it leaves as the part arrives over it */
+.bento-tile [data-part="ghost"] { opacity: 1; transform: none; transition-duration: 0.35s; }
+.bento-tile[data-play] [data-part] { opacity: 1; transform: none; }
+.bento-tile[data-play] [data-part="ghost"] { opacity: 0; }
+/* text written into a box: uncovered at a steady pace behind a caret that then goes */
+.bento-tile [data-typed] { clip-path: inset(0 100% 0 0); transition: clip-path calc(var(--chars) * 26ms) linear calc(var(--at) * 1s); }
+.bento-tile[data-play] [data-typed] { clip-path: inset(0 -2px 0 0); }
+.bento-tile [data-caret] { opacity: 0; }
+.bento-tile[data-play] [data-caret] { animation: features-caret calc(var(--chars) * 26ms / 0.8) linear calc(var(--at) * 1s) both; }
+@keyframes features-caret {
+  0% { opacity: 1; transform: translateX(0); }
+  80% { opacity: 1; transform: translateX(100%); }
+  100% { opacity: 0; transform: translateX(100%); }
+}
+.bento-tile[data-play] [data-press] { animation: features-press 0.4s var(--settle) calc(var(--at) * 1s) both; }
+@keyframes features-press { 35% { transform: scale(0.94); } }
+/* under a mouse: the finished parts lift in the story's order and settle; nothing is taken away */
+.bento-tile[data-wave] [data-part]:not([data-part="draw"], [data-part="ghost"]) { animation: features-lift 0.65s cubic-bezier(0.3, 0, 0.3, 1) calc(var(--at, 0) * 0.3s); }
+@keyframes features-lift { 40% { transform: translate3d(0, -3px, 0); } }
+@media (prefers-reduced-motion: reduce) {
+  .bento-tile [data-part], .bento-tile [data-typed] { opacity: 1; transform: none; clip-path: none; transition: none; }
+  .bento-tile [data-part="ghost"] { opacity: 0; }
+  .bento-tile [data-part], .bento-tile [data-caret], .bento-tile [data-press] { animation: none !important; }
+}
