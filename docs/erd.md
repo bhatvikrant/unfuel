@@ -638,7 +638,7 @@ The first version is built and runs. Where it differs from the sections above, t
 - A fill-up deleted more than 30 days ago is removed for good with its photos (`fillUps.purgeDeleted`, daily). Until then Undo can bring it back.
 - A new fill-up the server refuses (made offline, say with an odometer that clashes with one added elsewhere) is not dropped: it is kept with its photos under "Could not sync" on Home, to fix or discard (`src/offline/store.ts` `park`).
 - `files.claim` answers `"refused"` instead of throwing for a file that is not an optimised image: an error would have rolled back the delete and left the file stored.
-- `scripts/delete-convex-preview.mjs` no longer carries UnSplit's production deployment name: it needs `CONVEX_PROD_DEPLOYMENT` or `CONVEX_PROJECT_ID`, so it cannot be pointed at another app's project by accident.
+- `scripts/delete-convex-preview.mjs` no longer carries UnSplit's production deployment name: it names Unfuel's own (`usable-coyote-630`), and `CONVEX_PROD_DEPLOYMENT` or `CONVEX_PROJECT_ID` override it.
 
 ### Checked, and how
 
@@ -656,7 +656,7 @@ The first version is built and runs. Where it differs from the sections above, t
 
 - **An AI read against the real API.** No key was available. The request shape follows UnMoney's working code and the checks on the answer are tested, but no photo has been read by Claude from this app.
 - **Google Places against the real API.** No key. The picking rules are tested with made-up results; the request and response shapes come from Google's docs.
-- **Google sign-in, and a production deploy.** Neither a Google OAuth client nor Convex and Vercel projects exist yet.
+- **Google sign-in.** Production is deployed (README, Deploy), but no Google OAuth client exists yet, so nobody can sign in there.
 - **Real photographs**: how well the device reads real bills and odometers, and real optimised sizes.
 - **iPhone and Android devices**: only desktop Chromium at phone sizes.
 - **UnMoney in production**: checked end to end only between two local backends (below). UnMoney's side is on a branch and on its dev deployment, not in production.
