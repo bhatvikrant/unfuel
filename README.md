@@ -79,14 +79,21 @@ Not covered by any test: a real AI read (needs a key and sample photos; `convex/
 
 ## Deploy
 
-As UnMoney and UnSplit: the Convex backend on a cloud deployment, the static `dist/` on Vercel, and merging to `main` is the release.
+Production is <https://unfuel.vikrantbhat.com>: the Vercel project `unfuel`, connected to this repository, and the Convex project `bhatvikrant/unfuel` (production deployment `usable-coyote-630`). Nothing is deployed by hand:
 
-1. **Convex project**: `bunx convex dev --once --env-file .env.cloud.local`, then `bunx convex deploy -y --env-file .env.cloud.local` for production.
-2. **Vercel project**: `vercel link`. `vercel.json` installs with bun and builds with `bunx convex deploy -y --cmd 'bun run build'`, so functions and frontend go out together. Add a production deploy key: `vercel env add CONVEX_DEPLOY_KEY production` (and a preview key for preview deployments).
-3. **Auth**: `SITE_URL=https://<your domain> ./scripts/setup-auth-env.sh --prod`.
-4. **Google sign-in**: an OAuth client (Web application) with the redirect URI `https://<deployment>.convex.site/api/auth/callback/google`, then `bun run env:prod -- set AUTH_GOOGLE_ID ...` and `AUTH_GOOGLE_SECRET ...`.
-5. **Keys**: `bun run env:prod -- set ANTHROPIC_API_KEY ...` and `GOOGLE_MAPS_API_KEY ...`.
-6. **Preview cleanup**: set `CONVEX_PROD_DEPLOYMENT` (or `CONVEX_PROJECT_ID`) and `CONVEX_ACCESS_TOKEN` for `.github/workflows/delete-convex-preview.yml`.
+- **A push to `main` is the release.** Vercel builds it, and the build command in `vercel.json` (`bunx convex deploy -y --cmd 'bun run build'`) pushes `convex/` to production first, then builds the frontend against it. It uses the production deploy key in Vercel's Production env (`CONVEX_DEPLOY_KEY`).
+- **Every other branch gets a preview**: its own Vercel URL and its own Convex deployment (`preview/<branch>`), made with the preview deploy key in Vercel's Preview env (also `CONVEX_DEPLOY_KEY`). `scripts/convex-preview-env.mjs` then gives that backend its sign-in keys and `SITE_URL`.
+- **A merged pull request's Convex preview is deleted** by `.github/workflows/delete-convex-preview.yml`, with the `CONVEX_ACCESS_TOKEN` repository secret (a Convex team access token). By hand: `node scripts/delete-convex-preview.mjs <branch> [--dry-run]`.
+- **CI** (`.github/workflows/ci.yml`) runs typecheck, lint, tests and a build on every push and pull request.
+
+Production settings live on the Convex deployment: `bun run env:prod -- list --names-only`, `bun run env:prod -- set NAME value`. Set so far: the sign-in keys and `SITE_URL`. Still to set:
+
+- **Google sign-in**: an OAuth client (Web application) with the redirect URI `https://usable-coyote-630.convex.site/api/auth/callback/google`, then `AUTH_GOOGLE_ID` and `AUTH_GOOGLE_SECRET`. Nobody can sign in to production until this is done. Add the same two to Vercel's Preview env for previews to have sign-in.
+- **Keys**: `ANTHROPIC_API_KEY` and `GOOGLE_MAPS_API_KEY`.
+
+DNS: `unfuel.vikrantbhat.com` is a DNS-only `CNAME unfuel → 60ada9d388810d78.vercel-dns-017.com` in Cloudflare (`vercel domains verify unfuel.vikrantbhat.com` prints it).
+
+To build all this again from nothing: `bunx convex project create unfuel`, `bunx convex deployment create <team>:unfuel:production --type prod --default`, `./scripts/setup-auth-env.sh --prod` with `SITE_URL` set, `vercel link` and `vercel git connect`, `bunx convex deployment token create vercel-production --deployment <team>:unfuel:prod | vercel env add CONVEX_DEPLOY_KEY production`, a preview deploy key from the Convex dashboard (Project settings › Preview Deploy Keys) into Vercel's Preview env, and a team access token (Team settings › Access Tokens) into `gh secret set CONVEX_ACCESS_TOKEN`.
 
 `vercel.json` also sets the security headers, including a Content-Security-Policy that names the one inline script in `index.html` by its hash: `tests/unit/csp.test.ts` fails when that script is edited without updating it.
 

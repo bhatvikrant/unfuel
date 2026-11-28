@@ -18,9 +18,8 @@ import { homedir } from "node:os";
 import { join } from "node:path";
 
 const API = "https://api.convex.dev/v1";
-// Unfuel's production deployment, once it exists: set it here or in CONVEX_PROD_DEPLOYMENT. Empty on
-// purpose until then, so this script can never be pointed at another app's project by a copied name.
-const PROD_DEPLOYMENT = process.env.CONVEX_PROD_DEPLOYMENT ?? "";
+// Unfuel's production deployment (Convex project bhatvikrant/unfuel): the project is looked up from it.
+const PROD_DEPLOYMENT = process.env.CONVEX_PROD_DEPLOYMENT ?? "usable-coyote-630";
 
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
